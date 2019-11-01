@@ -48,10 +48,10 @@ Size.2levFr<- function(factor, fraction, order=1, delta_type=1,  delta , alpha=0
 
   if (2^(factor-fraction)-1 -(factor+factor*(factor-1)/2)<0 & order==2)
   {
-    stop( "Two-way interactions can't be estimated.")
+    return( "Two-way interactions can't be estimated.")
   }
 
-  for (n in 2:100){
+  for (n in 2:1000){
     v1=n-1
     if (order==1){
       v <- (rep(2,factor)-1)
@@ -91,5 +91,9 @@ Size.2levFr<- function(factor, fraction, order=1, delta_type=1,  delta , alpha=0
     }
   }
 
+  if(nn==0 & n==1000)
+   {
+    return( "Sample size exceeds 1,000.")
+  }
   return(list(model=list1,n=nn, Delta=Delta))
 }

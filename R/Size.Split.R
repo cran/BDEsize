@@ -55,7 +55,7 @@ Size.Split<- function(whole.factor, whole.factor.lev, split.factor, split.factor
   list1<-list_tmp$list1
   if (whole.factor>2 || split.factor>2)
   {
-    stop("The number of whole plot factors and split plot factors are up to 2.")
+    return("The number of whole plot factors and split plot factors are up to 2.")
   }
   if( order==2)
   {
@@ -69,7 +69,7 @@ Size.Split<- function(whole.factor, whole.factor.lev, split.factor, split.factor
   }
 
 
-  for (n in 2:100){
+  for (n in 2:1000){
     if (order==1){
       v.whole <- NULL ; v.split <- NULL ; v.split.temp <- NULL
       c.whole <- NULL ; c.split <- NULL
@@ -157,5 +157,8 @@ Size.Split<- function(whole.factor, whole.factor.lev, split.factor, split.factor
       break
     }
   }
+
+  if(nn==0 & n==1000)
+    return( "Sample size exceeds 1,000.")
   return(list(model=list1,n=nn, Delta=Delta))
 }

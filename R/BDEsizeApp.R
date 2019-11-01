@@ -16,7 +16,7 @@ if (interactive()) {
       "Design options",
       shiny::tabPanel("Factorial Design",
                       shiny::sidebarPanel(
-                        shiny::numericInput('nf','Number of Factor',2,min=2,max=10),
+                        shiny::numericInput('nf','Number of Factor',2,min=1,max=10),
                         shiny::textInput("fl", 'Factor Levels', value = "2,2"),
                         shiny::checkboxGroupInput("checkGroup", "Order",
                                     choices = list("Main" = 1, "Two-way Interactions" = 2),
@@ -26,17 +26,18 @@ if (interactive()) {
                       c("SD" = 1, "Range of effect" =2)
                               ),
                       shiny::conditionalPanel("input.delta_type==1",
-                                              shiny::numericInput('de1','SD(Main)',1,min=0,max=10),
-                                              shiny::numericInput('de2','SD(Interaction)',1,min=0,max=10),
-                                              shiny::numericInput('de3','SD(Noise)',1,min=0,max=10)
+                                              shiny::numericInput('de1','SD(Main)',1,min=0,max=100),
+                                              shiny::numericInput('de2','SD(Interaction)',1,min=0,max=100),
+                                              shiny::numericInput('de3','SD(Noise)',1,min=0,max=100)
                                       )  ,
                       shiny::conditionalPanel("input.delta_type==2",
-                                              shiny::numericInput('de11','Range of effect(Main)',1,min=0,max=10),
-                                              shiny::numericInput('de12','Range of effect(Interaction)',1,min=0,max=10),
-                                              shiny::numericInput('de13','SD(Noise)',1,min=0,max=10)
+                                              shiny::numericInput('de11','Range of effect(Main)',1,min=0,max=100),
+                                              shiny::numericInput('de12','Range of effect(Interaction)',1,min=0,max=100),
+                                              shiny::numericInput('de13','SD(Noise)',1,min=0,max=100)
                                      )  ,
                       shiny::numericInput('a','Type I error',0.05,min=0,max=1),
                       shiny::numericInput('b','Power',0.8,min=0,max=1),
+                      shinyalert::useShinyalert(),
                       shiny::actionButton("do", "Click Me" , shiny::icon("paper-plane"),
                  style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                ),
@@ -67,7 +68,7 @@ if (interactive()) {
                                    shiny::sidebarLayout(
                                      shiny::sidebarPanel(
                                        shiny::selectInput("plot_delta", "Delta",
-                                            choices=c(1,1.5,2.0)
+                                            choices=c(0.5,1,1.5,2.0)
                                             )
                                 ),
                                 shiny::mainPanel(shiny::plotOutput("power_graph")
@@ -79,7 +80,7 @@ if (interactive()) {
                ),
       shiny::tabPanel("Fractional FD",
                       shiny::sidebarPanel(
-                        shiny::numericInput('nf2','Number of 2 level Factor',2,min=2,max=10),
+                        shiny::numericInput('nf2','Number of 2 level Factor',2,min=1,max=10),
                         shiny::numericInput('fr2','Fraction p (eg:2^(k-p))',1,min=1,max=10),
                         shiny::checkboxGroupInput("checkGroup2", "Order",
                            choices = list("Main" = 1, "Two-way Interactions" = 2),
@@ -89,14 +90,14 @@ if (interactive()) {
                    c("SD" = 1, "Range of effect" =2)
                    ),
                    shiny::conditionalPanel("input.delta_type2==1",
-                                           shiny::numericInput('de1_2','SD(Main)',1,min=0,max=10),
-                                           shiny::numericInput('de2_2','SD(Interaction)',1,min=0,max=10),
-                                           shiny::numericInput('de3_2','SD(Noise)',1,min=0,max=10)
+                                           shiny::numericInput('de1_2','SD(Main)',1,min=0,max=100),
+                                           shiny::numericInput('de2_2','SD(Interaction)',1,min=0,max=100),
+                                           shiny::numericInput('de3_2','SD(Noise)',1,min=0,max=100)
                                   )  ,
                    shiny::conditionalPanel("input.delta_type2==2",
-                                           shiny::numericInput('de11_2','Range of effect(Main)',1,min=0,max=10),
-                                           shiny::numericInput('de12_2','Range of effect(Interaction)',1,min=0,max=10),
-                                           shiny::numericInput('de13_2','SD(Noise)',1,min=0,max=10)
+                                           shiny::numericInput('de11_2','Range of effect(Main)',1,min=0,max=100),
+                                           shiny::numericInput('de12_2','Range of effect(Interaction)',1,min=0,max=100),
+                                           shiny::numericInput('de13_2','SD(Noise)',1,min=0,max=100)
                                   )  ,
                    shiny::numericInput('a2','Type I error',0.05,min=0,max=1),
                    shiny::numericInput('b2','Power',0.8,min=0,max=1),
@@ -130,7 +131,7 @@ if (interactive()) {
                                    shiny::sidebarLayout(
                                      shiny::sidebarPanel(
                                        shiny::selectInput("plot_delta2", "Delta",
-                                   choices=c(1,1.5,2.0))
+                                   choices=c(0.5,1,1.5,2.0))
                        ),
                        shiny::mainPanel( shiny::plotOutput("power_graph2"))
                      )
@@ -140,7 +141,7 @@ if (interactive()) {
       ),
       shiny::tabPanel("Randomized Block",
                       shiny::sidebarPanel(
-                        shiny::numericInput('nf3','Number of Factor',2,min=2,max=10),
+                        shiny::numericInput('nf3','Number of Factor',2,min=1,max=10),
                         shiny::textInput("fl3", 'Factor Levels', value = "2,2"),
                         shiny::checkboxGroupInput("checkGroup3", "Order",
                                     choices = list("Main" = 1, "Two-way Interactions" = 2),
@@ -150,17 +151,18 @@ if (interactive()) {
                    c("SD" = 1, "Range of effect" =2)
                    ),
                    shiny::conditionalPanel("input.delta_type3==1",
-                                           shiny::numericInput('de1_3','SD(Main)',1,min=0,max=10),
-                                           shiny::numericInput('de2_3','SD(Interaction)',1,min=0,max=10),
-                                           shiny::numericInput('de3_3','SD(Noise)',1,min=0,max=10)
+                                           shiny::numericInput('de1_3','SD(Main)',1,min=0,max=100),
+                                           shiny::numericInput('de2_3','SD(Interaction)',1,min=0,max=100),
+                                           shiny::numericInput('de3_3','SD(Noise)',1,min=0,max=100)
                                   )  ,
                    shiny:: conditionalPanel("input.delta_type3==2",
-                                            shiny::numericInput('de11_3','Range of effect(Main)',1,min=0,max=10),
-                                            shiny::numericInput('de12_3','Range of effect(Interaction)',1,min=0,max=10),
-                                            shiny::numericInput('de13_3','SD(Noise)',1,min=0,max=10)
+                                            shiny::numericInput('de11_3','Range of effect(Main)',1,min=0,max=100),
+                                            shiny::numericInput('de12_3','Range of effect(Interaction)',1,min=0,max=100),
+                                            shiny::numericInput('de13_3','SD(Noise)',1,min=0,max=100)
                                   )  ,
                    shiny::numericInput('a3','Type I error',0.05,min=0,max=1),
                    shiny::numericInput('b3','Power',0.8,min=0,max=1),
+                   shinyalert::useShinyalert(),
                    shiny::actionButton("do3", "Click Me" , shiny::icon("paper-plane"),
                               style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                  ),
@@ -190,7 +192,7 @@ if (interactive()) {
                                      shiny::sidebarLayout(
                                        shiny::sidebarPanel(
                                          shiny::selectInput("plot_delta3", "Delta",
-                                            choices=c(1,1.5,2.0))
+                                            choices=c(0.5,1,1.5,2.0))
                                 ),
                                 shiny::mainPanel(shiny::plotOutput("power_graph3"))
                               )
@@ -200,9 +202,9 @@ if (interactive()) {
                ),
       shiny::tabPanel("Split-Plot Design",
                       shiny::sidebarPanel(
-                        shiny::numericInput('wf','Number of Whole Factor',2,min=2,max=10),
+                        shiny::numericInput('wf','Number of Whole Factor',2,min=1,max=10),
                         shiny::textInput("wfl", 'Whole Factor Levels', value = "2,2"),
-                        shiny::numericInput('sf','Number of Split Factor',2,min=2,max=10),
+                        shiny::numericInput('sf','Number of Split Factor',2,min=1,max=10),
                         shiny::textInput("sfl", 'Split Factor Levels', value = "2,2"),
                         shiny::checkboxGroupInput("checkGroup4", "Order",
                                     choices = list("Main" = 1, "Two-way Interactions" = 2),
@@ -212,16 +214,16 @@ if (interactive()) {
                    c("SD" = 1, "Range of effect" =2)
                    ),
                    shiny::conditionalPanel("input.delta_type4==1",
-                                           shiny::numericInput('de1_4','SD(Main)',1,min=0,max=10),
-                                           shiny::numericInput('de2_4','SD(Interaction)',1,min=0,max=10),
-                                           shiny::numericInput('de3_4','SD(Whole Noise)',1,min=0,max=10),
-                                           shiny::numericInput('de4_4','SD(Noise)',1,min=0,max=10)
+                                           shiny::numericInput('de1_4','SD(Main)',1,min=0,max=100),
+                                           shiny::numericInput('de2_4','SD(Interaction)',1,min=0,max=100),
+                                           shiny::numericInput('de3_4','SD(Whole Noise)',1,min=0,max=100),
+                                           shiny::numericInput('de4_4','SD(Noise)',1,min=0,max=100)
                                   )  ,
                    shiny::conditionalPanel("input.delta_type4==2",
-                                           shiny::numericInput('de11_4','Range of effect(Main)',1,min=0,max=10),
-                                           shiny::numericInput('de12_4','Range of effect(Interaction)',1,min=0,max=10),
-                                           shiny::numericInput('de13_4','SD(Whole Noise)',1,min=0,max=10),
-                                           shiny::numericInput('de14_4','SD(Noise)',1,min=0,max=10)
+                                           shiny::numericInput('de11_4','Range of effect(Main)',1,min=0,max=100),
+                                           shiny::numericInput('de12_4','Range of effect(Interaction)',1,min=0,max=100),
+                                           shiny::numericInput('de13_4','SD(Whole Noise)',1,min=0,max=100),
+                                           shiny::numericInput('de14_4','SD(Noise)',1,min=0,max=100)
                                   )  ,
                    shiny::numericInput('a4','Type I error',0.05,min=0,max=1),
                    shiny::numericInput('b4','Power',0.8,min=0,max=1),
@@ -255,7 +257,7 @@ if (interactive()) {
                                      shiny::sidebarLayout(
                                        shiny::sidebarPanel(
                                          shiny::selectInput("plot_delta4", "Delta",
-                                            choices=c(1,1.5,2.0))
+                                            choices=c(0.5,1,1.5,2.0))
                                 ),
                                 shiny::mainPanel(shiny::plotOutput("power_graph4"))
                               )
@@ -272,14 +274,23 @@ if (interactive()) {
     {
     shiny::observeEvent(input$do,
                  {
+                   if ( input$nf==1 &  max(input$checkGroup)==2)
+                   {
+                     shinyalert::shinyalert("Error!", "The number of factor is just one! Two-way interactions can't be estimated.", type = "error")
+                   }
 
+                   else{
     list_tmp<-sizelist(input$nf,max(input$checkGroup))
     full_list<-list_tmp$full_list
     full_list1$full<-c(full_list,"ALL")
     shiny::updateSelectInput(session,"plot_order",choices=full_list1$full)
 
      A<-Size.Full(input$nf, as.numeric(unlist(strsplit(input$fl,","))),  delta_type=input$delta_type,order=max(input$checkGroup), delta=ifelse(rep(input$delta_type==1,3),c(input$de1,input$de2,input$de3),c(input$de11,input$de12,input$de13)), beta=1-input$b, alpha=input$a)
-
+    if(length(A)==1)
+    {
+      shinyalert::shinyalert("Error!", "Sample size exceeds 1,000.", type = "error")
+    }
+     else {
     output$Size1<-shiny::renderText({A$n})
     output$Size2<-shiny::renderText({A$Delta})
     output$list1<-shiny::renderText({A$model})
@@ -289,9 +300,9 @@ if (interactive()) {
     {
       (n.choose <- A$n);
       (Delta.choose <- data.frame(t(A$Delta)))
-      power <- round(seq(0,1,length.out=101),3)
+      power <- round(seq(0,1,length.out=1001),3)
       start <- ifelse((n.choose-1)<=2, 2, n.choose-2)
-      Delta <- array(0,c(100,n.choose-start+1, ncol(Delta.choose)))
+      Delta <- array(0,c(1000,n.choose-start+1, ncol(Delta.choose)))
       delta.pwr <- matrix(0,n.choose-start+1, ncol(Delta.choose))
 
       temp_v<-list()
@@ -324,8 +335,8 @@ if (interactive()) {
 
         for (j in 1: length(v) ){
 
-          for (ind in 1: 100){
-            if(alpha+1-power[ind]<0.9999)
+          for (ind in 1: 1000){
+                      if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
               (Delta[ind,(n-start+1),j] <-  fsize(alpha, 1-power[ind], v[j], v.denom, c[j], delta_type ,v_flag[j]))
             else (Delta[ind,(n-start+1),j]<-NA)
           }
@@ -344,18 +355,18 @@ if (interactive()) {
       {
         for(j in 1: length(v))
         {
-          tmp1<-rep(full_list1$full[[j]],100)
+          tmp1<-rep(full_list1$full[[j]],1000)
           if ( j==1)
           {
             factor_type<-tmp1
             Delta1<-Delta[,(n.choose -start+1),j]
-            power1 <-power[1:100]
+            power1 <-power[1:1000]
           }
           else if (j>1)
           {
             factor_type<-t(cbind(t(factor_type),t(tmp1)))
             Delta1<-t(cbind(t(Delta1),t(Delta[,(n.choose -start+1),j])))
-            power1 <-t(cbind(t(power1),t(power[1:100])))
+            power1 <-t(cbind(t(power1),t(power[1:1000])))
           }
 
         }
@@ -380,19 +391,19 @@ if (interactive()) {
 
         for( j in 1: (n.choose -start+1))
         {
-          tmp1<-rep(start+j-1,100)
+          tmp1<-rep(start+j-1,1000)
           if(j==1)
           {
             size1<-tmp1
             Delta1<-Delta[,j,i]
-            power1 <-power[1:100]
+            power1 <-power[1:1000]
           }
 
           else
           {
             size1<-t(cbind(t(size1),t(tmp1)))
             Delta1<-t(cbind(t(Delta1),t(Delta[,j,i])))
-            power1 <-t(cbind(t(power1),t(power[1:100])))
+            power1 <-t(cbind(t(power1),t(power[1:1000])))
           }
         }
 
@@ -460,6 +471,8 @@ if (interactive()) {
 
      }
    )
+     }
+                   }
    }
    )
 
@@ -485,7 +498,11 @@ if (interactive()) {
         shiny::updateSelectInput(session,"plot_order2",choices=full_list1$fr)
 
       B<-Size.2levFr(input$nf2, input$fr2, order=max(input$checkGroup2),delta_type=input$delta_type2,delta=ifelse(rep(input$delta_type2==1,3),c(input$de1_2,input$de2_2,input$de3_2),c(input$de11_2,input$de12_2,input$de13_2)), beta=1-input$b2, alpha=input$a2)
-
+      if(length(B)==1)
+      {
+        shinyalert::shinyalert("Error!", "Sample size exceeds 1,000.", type = "error")
+      }
+      else {
       output$Size12<-shiny::renderText({B$n})
       output$Size22<-shiny::renderText({B$Delta})
       output$list1_2<-shiny::renderText({B$model})
@@ -494,9 +511,9 @@ if (interactive()) {
        {
         (n.choose <- B$n);
         (Delta.choose <- data.frame(t(B$Delta)))
-        power <- round(seq(0,1,length.out=101),3)
+        power <- round(seq(0,1,length.out=1001),3)
         start <- ifelse((n.choose-1)<=2, 2, n.choose-2)
-        Delta <- array(0,c(100,n.choose-start+1, ncol(Delta.choose)))
+        Delta <- array(0,c(1000,n.choose-start+1, ncol(Delta.choose)))
         delta.pwr <- matrix(0,n.choose-start+1, ncol(Delta.choose))
 
         factor.lev<-2
@@ -512,8 +529,8 @@ if (interactive()) {
           v <-  (rep(2,factor)-1)
           c <- (prod(rep(2,factor))/rep(2,fraction) )*n/rep(2,factor)
           v.denom<- 2^(factor-fraction)*n-1-factor
-          for (ind in 1: 100){
-            if(alpha+1-power[ind]<0.9999)
+          for (ind in 1: 1000){
+                      if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
               (Delta[ind,(n-start+1),1]<- fsize(alpha, 1-power[ind], v[1], v.denom, c[1],delta_type,0))
             else (Delta[ind,(n-start+1),1]<-NA)
             }
@@ -525,8 +542,8 @@ if (interactive()) {
           v <- c(rep(2,factor)-1,v[upper.tri(v, diag=FALSE)])
           c <- (prod(rep(2,factor))/rep(2,fraction) )*n/c(rep(2,factor), (rep(2,factor)%*%t(rep(2,factor)))[upper.tri((rep(2,factor))%*%t(rep(2,factor)), diag=FALSE)])
           v.denom<- 2^(factor-fraction)*n-1-factor-factor*(factor-1)/2
-          for (ind in 1: 100){
-            if(alpha+1-power[ind]<0.9999)
+          for (ind in 1: 1000){
+                      if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
             {
               (Delta[ind,(n-start+1),1]<- fsize(alpha, 1-power[ind], v[1], v.denom, c[1],delta_type,0))
               (Delta[ind,(n-start+1),2] <- fsize(alpha, 1-power[ind], v[factor+1], v.denom, c[factor+1],delta_type,1))
@@ -552,18 +569,18 @@ if (interactive()) {
 
           for(j in 1: 2)
           {
-            tmp1<-rep(full_list1$fr[[j]],100)
+            tmp1<-rep(full_list1$fr[[j]],1000)
             if ( j==1)
             {
               factor_type<-tmp1
               Delta1<-Delta[,(n.choose -start+1),j]
-              power1 <-power[1:100]
+              power1 <-power[1:1000]
             }
             else if (j>1)
             {
               factor_type<-t(cbind(t(factor_type),t(tmp1)))
               Delta1<-t(cbind(t(Delta1),t(Delta[,(n.choose -start+1),j])))
-              power1 <-t(cbind(t(power1),t(power[1:100])))
+              power1 <-t(cbind(t(power1),t(power[1:1000])))
             }
 
           }
@@ -586,19 +603,19 @@ if (interactive()) {
 
           for( j in 1: (n.choose -start+1))
           {
-            tmp1<-rep(start+j-1,100)
+            tmp1<-rep(start+j-1,1000)
             if(j==1)
             {
               size1<-tmp1
               Delta1<-Delta[,j,i]
-              power1 <-power[1:100]
+              power1 <-power[1:1000]
             }
 
             else
             {
               size1<-t(cbind(t(size1),t(tmp1)))
               Delta1<-t(cbind(t(Delta1),t(Delta[,j,i])))
-              power1 <-t(cbind(t(power1),t(power[1:100])))
+              power1 <-t(cbind(t(power1),t(power[1:1000])))
             }
           }
           data<-data.frame(size1, Delta1, power1)
@@ -666,18 +683,28 @@ if (interactive()) {
         )
       }
       }
+      }
       )
 
     shiny::observeEvent(input$do3,
                  {
+                   if ( input$nf3==1 &  max(input$checkGroup3)==2)
+                   {
+                     shinyalert::shinyalert("Error!", "The number of factor is just one! Two-way interactions can't be estimated.", type = "error")
+                   }
 
+                   else{
       list_tmp<-sizelist(input$nf3,max(input$checkGroup3))
       full_list<-list_tmp$full_list
       full_list1$RCBD<-c(full_list,"ALL")
       shiny::updateSelectInput(session,"plot_order3",choices=full_list1$RCBD)
 
       C<-Size.Block(input$nf3, as.numeric(unlist(strsplit(input$fl3,","))),  delta_type=input$delta_type3,order=max(input$checkGroup3),delta =ifelse(rep(input$delta_type3==1,3),c(input$de1_3,input$de2_3,input$de3_3),c(input$de11_3,input$de12_3,input$de13_3)), beta=1-input$b3, alpha=input$a3)
-
+      if(length(C)==1)
+      {
+        shinyalert::shinyalert("Error!", "Sample size exceeds 1,000.", type = "error")
+      }
+      else {
       output$Size1_3<-shiny::renderText({C$n})
       output$Size2_3<-shiny::renderText({C$Delta})
       output$list1_3<-shiny::renderText({C$model})
@@ -688,9 +715,9 @@ if (interactive()) {
       {
         (n.choose <- C$n);
         (Delta.choose <- data.frame(t(C$Delta)))
-        power <- round(seq(0,1,length.out=101),3)
+        power <- round(seq(0,1,length.out=1001),3)
         start <- ifelse((n.choose-1)<=2, 2, n.choose-2)
-        Delta <- array(0,c(100,n.choose-start+1, ncol(Delta.choose)))
+        Delta <- array(0,c(1000,n.choose-start+1, ncol(Delta.choose)))
         delta.pwr <- matrix(0,n.choose-start+1, ncol(Delta.choose))
 
         temp_v<-list()
@@ -723,8 +750,8 @@ if (interactive()) {
 
           for (j in 1: length(v) ){
 
-            for (ind in 1: 100){
-              if(alpha+1-power[ind]<0.9999)
+            for (ind in 1: 1000){
+                        if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
                 (Delta[ind,(n-start+1),j] <- fsize(alpha, 1-power[ind], v[j], v.denom, c[j], delta_type ,v_flag[j]))
               else (Delta[ind,(n-start+1),j]<-NA)
             }
@@ -743,18 +770,18 @@ if (interactive()) {
         {
           for(j in 1: length(v))
           {
-            tmp1<-rep(full_list1$RCBD[[j]],100)
+            tmp1<-rep(full_list1$RCBD[[j]],1000)
             if ( j==1)
             {
               factor_type<-tmp1
               Delta1<-Delta[,(n.choose -start+1),j]
-              power1 <-power[1:100]
+              power1 <-power[1:1000]
             }
             else if (j>1)
             {
               factor_type<-t(cbind(t(factor_type),t(tmp1)))
               Delta1<-t(cbind(t(Delta1),t(Delta[,(n.choose -start+1),j])))
-              power1 <-t(cbind(t(power1),t(power[1:100])))
+              power1 <-t(cbind(t(power1),t(power[1:1000])))
             }
 
           }
@@ -779,19 +806,19 @@ if (interactive()) {
 
           for( j in 1: (n.choose -start+1))
           {
-            tmp1<-rep(start+j-1,100)
+            tmp1<-rep(start+j-1,1000)
             if(j==1)
             {
               size1<-tmp1
               Delta1<-Delta[,j,i]
-              power1 <-power[1:100]
+              power1 <-power[1:1000]
             }
 
             else
             {
               size1<-t(cbind(t(size1),t(tmp1)))
               Delta1<-t(cbind(t(Delta1),t(Delta[,j,i])))
-              power1 <-t(cbind(t(power1),t(power[1:100])))
+              power1 <-t(cbind(t(power1),t(power[1:1000])))
             }
           }
 
@@ -860,6 +887,8 @@ if (interactive()) {
 
       }
       )
+      }
+                   }
                  }
     )
     shiny::observeEvent(input$do4,
@@ -877,7 +906,11 @@ if (interactive()) {
 
         D<-Size.Split(input$wf, as.numeric(unlist(strsplit(input$wfl,","))), input$sf, as.numeric(unlist(strsplit(input$sfl,","))),
                       delta_type=input$delta_type4,order=max(input$checkGroup4), delta=ifelse(rep(input$delta_type4==1,4),c(input$de1_4,input$de2_4,input$de3_4,input$de4_4),c(input$de11_4,input$de12_4,input$de13_4,input$de14_4)), beta=1-input$b4, alpha=input$a4)
-
+        if(length(D)==1)
+        {
+          shinyalert::shinyalert("Error!", "Sample size exceeds 1,000.", type = "error")
+        }
+        else {
         output$Size1_4<-shiny::renderText({D$n})
         output$Size2_4<-shiny::renderText({D$Delta})
         output$list1_4<-shiny::renderText({D$model})
@@ -887,9 +920,9 @@ if (interactive()) {
         {
           (n.choose <- D$n);
           (Delta.choose <- data.frame(t(D$Delta)))
-          power <- round(seq(0,1,length.out=101),3)
+          power <- round(seq(0,1,length.out=1001),3)
           start <- ifelse((n.choose-1)<=2, 2, n.choose-2)
-          Delta <- array(0,c(100,n.choose-start+1, ncol(Delta.choose)))
+          Delta <- array(0,c(1000,n.choose-start+1, ncol(Delta.choose)))
 
           temp_n<-list()
           temp_v<-list()
@@ -922,8 +955,8 @@ if (interactive()) {
               c.whole <- prod( whole.factor.lev)*prod( split.factor.lev)*n/ whole.factor.lev
 
               for (j in 1: length(v.whole)){
-                for (ind in 1: 100){
-                  if(alpha+1-power[ind]<0.9999)
+                for (ind in 1: 1000){
+                            if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
                     (Delta[ind,(n-start+1),j] <- fsize(alpha, 1-power[ind],v.whole[j], v.whole.denom, c.whole[j],delta_type,0)*sqrt(prod( split.factor.lev)+1))
                   else ( Delta[ind,(n-start+1),j]<-NA)
                 }
@@ -935,8 +968,8 @@ if (interactive()) {
               c.split <- prod( whole.factor.lev)*prod( split.factor.lev)*n/ split.factor.lev
 
               for (j in 1: length(v.split)){
-                for (ind in 1: 100){
-                  if(alpha+1-power[ind]<0.9999)
+                for (ind in 1: 1000){
+                            if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
                     (Delta[ind,(n -start+1),(length(v.whole)+j)] <- fsize(alpha, 1-power[ind], v.split[j], v.split.denom, c.split[j],delta_type,0))
                   else ( Delta[ind,(n -start+1),(length(v.whole)+j)] <-NA)
                 }
@@ -955,8 +988,8 @@ if (interactive()) {
               c.whole <- prod( whole.factor.lev)*prod( split.factor.lev)*n/c( whole.factor.lev, ( whole.factor.lev%*%t( whole.factor.lev))[upper.tri(( whole.factor.lev)%*%t( whole.factor.lev), diag=FALSE)])
 
               for (j in 1: length(v.whole)){
-                for (ind in 1: 100){
-                  if(alpha+1-power[ind]<0.9999)
+                for (ind in 1: 1000){
+                            if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
                     (Delta[ind,(n -start+1),j] <- fsize(alpha, 1-power[ind],v.whole[j], v.whole.denom, c.whole[j],delta_type,wv_flag[j])*sqrt(prod( split.factor.lev)+1))
                   else (Delta[ind,(n -start+1),j] <-NA)
                 }
@@ -970,8 +1003,8 @@ if (interactive()) {
               c.split <- prod( whole.factor.lev)*prod( split.factor.lev)*n/c( split.factor.lev, ( split.factor.lev%*%t( split.factor.lev))[upper.tri(( split.factor.lev)%*%t(split.factor.lev), diag=FALSE)], as.vector(t( whole.factor.lev%*%t( split.factor.lev))))
 
               for (j in 1: length(v.split)){
-                for (ind in 1: 100){
-                  if(alpha+1-power[ind]<0.9999)
+                for (ind in 1: 1000){
+                            if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
                     (Delta[ind,(n -start+1),(length(v.whole)+j)] <- fsize(alpha, 1-power[ind], v.split[j], v.split.denom, c.split[j],delta_type, sv_flag[j]))
                   else (Delta[ind,(n -start+1),(length(v.whole)+j)] <-NA)
                 }
@@ -993,18 +1026,18 @@ if (interactive()) {
           {
             for(j in 1: (length(v.whole)+length(v.split)))
             {
-              tmp1<-rep(full_list1$split[[j]],100)
+              tmp1<-rep(full_list1$split[[j]],1000)
               if ( j==1)
               {
                 factor_type<-tmp1
                 Delta1<-Delta[,(n.choose -start+1),j]
-                power1 <-power[1:100]
+                power1 <-power[1:1000]
               }
               else if (j>1)
               {
                 factor_type<-t(cbind(t(factor_type),t(tmp1)))
                 Delta1<-t(cbind(t(Delta1),t(Delta[,(n.choose -start+1),j])))
-                power1 <-t(cbind(t(power1),t(power[1:100])))
+                power1 <-t(cbind(t(power1),t(power[1:1000])))
               }
 
             }
@@ -1029,19 +1062,19 @@ if (interactive()) {
 
             for( j in 1: (n.choose -start+1))
             {
-              tmp1<-rep(start+j-1,100)
+              tmp1<-rep(start+j-1,1000)
               if(j==1)
               {
                 size1<-tmp1
                 Delta1<-Delta[,j,i]
-                power1 <-power[1:100]
+                power1 <-power[1:1000]
               }
 
               else
               {
                 size1<-t(cbind(t(size1),t(tmp1)))
                 Delta1<-t(cbind(t(Delta1),t(Delta[,j,i])))
-                power1 <-t(cbind(t(power1),t(power[1:100])))
+                power1 <-t(cbind(t(power1),t(power[1:1000])))
               }
             }
 
@@ -1116,6 +1149,7 @@ if (interactive()) {
         }
         )
 ##########################3
+        }
         }
        }
     )

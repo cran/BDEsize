@@ -33,15 +33,15 @@ plots.2levFr<-
     (n.choose <- FF$n);
     (Delta.choose <- data.frame(t(FF$Delta)))
     nn<- ncol(Delta.choose)
-    power <- round(seq(0,1,length.out=101),3)
+    power <- round(seq(0,1,length.out=1001),3)
 
-    delta.pwr <-matrix(0,100,nn)
-    Delta <-matrix(0,100,nn)
-    pwr <-matrix(0,100,nn)
+    delta.pwr <-matrix(0,1000,nn)
+    Delta <-matrix(0,1000,nn)
+    pwr <-matrix(0,1000,nn)
 
 
 
-  for (n in 2:101) {
+  for (n in 2:1001) {
 
     v1=n-1
     if (order==1){
@@ -61,8 +61,8 @@ plots.2levFr<-
       for(i in 1: order)
       {
 
-        for (ind in 1: 100){
-          if(alpha+1-power[ind]<0.9999)
+        for (ind in 1: 1000){
+          if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
             (delta.pwr[ind, i] <- fsize(alpha, 1-power[ind], v[ ifelse(i==1,1,1+factor)], v.denom, c[ifelse(i==1,1,1+factor)], delta_type,ifelse(i==1,0,1)))
 
           else   (delta.pwr[ind,i]<-NA)
@@ -88,9 +88,9 @@ plots.2levFr<-
     }
   }
 
-      factor_type<-rep("Main",100)
+      factor_type<-rep("Main",1000)
     if(order==2)
-      factor_type<-t(cbind(t(factor_type),t(rep("Two-way Interactions",100))))
+      factor_type<-t(cbind(t(factor_type),t(rep("Two-way Interactions",1000))))
 
 
 
@@ -101,13 +101,13 @@ plots.2levFr<-
       if(i==1)
       {
       Delta1<-delta.pwr[,i]
-      power1 <-power[1:100]
+      power1 <-power[1:1000]
       }
 
       else
       {
         Delta1<-t(cbind(t(Delta1),t(delta.pwr[,i])))
-        power1 <-t(cbind(t(power1),t(power[1:100])))
+        power1 <-t(cbind(t(power1),t(power[1:1000])))
       }
     }
 
@@ -126,7 +126,7 @@ plots.2levFr<-
   }
   else if(type==2)
   {
-    n<-c(2:101)
+    n<-c(2:1001)
     for( i in 1: order)
     {
       if(i==1)
@@ -155,7 +155,7 @@ plots.2levFr<-
   }
   else if(type==3)
   {
-    n<-c(2:101)
+    n<-c(2:1001)
     for( i in 1: order)
     {
       if(i==1)

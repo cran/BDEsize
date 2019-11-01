@@ -44,7 +44,11 @@ else if(order==2)
 
 x<- length(full_list)
 list1<-full_list[[1]]
-for( i in 1:(x-1))
-  list1<-paste(list1,full_list[[i+1]],sep="+")
+if (x>1)
+{
+  for (i in 1:(x - 1))
+    list1 <- paste(list1, full_list[[i +1]], sep = "+")
+}
+
 return(list(full_list=full_list,list1=list1) )
 }

@@ -40,12 +40,12 @@ Three graphs in split-plot design are for investigating the mutual relationship 
 }
 \examples{
 #Delta vs Power plot
-plots.Split(whole.factor=2, whole.factor.lev=c(2,2),
-split.factor=2, split.factor.lev=c(2,2), order=1,
+plots.Split(whole.factor=1, whole.factor.lev=c(2),
+split.factor=1, split.factor.lev=c(2), order=1,
 delta_type=1, delta=c(1,0,1,1), alpha=0.05, beta=0.2, type=1)
 #Sample ize vs Power plot including two-way interaction effects
-plots.Split(whole.factor=2, whole.factor.lev=c(2,2),
-split.factor=2, split.factor.lev=c(2,2), order=2,
+plots.Split(whole.factor=1, whole.factor.lev=c(2),
+split.factor=1, split.factor.lev=c(2), order=2,
 delta_type=1, delta=c(1,1,1,1),deltao=1, alpha=0.05, beta=0.2, type=3)
 
 }

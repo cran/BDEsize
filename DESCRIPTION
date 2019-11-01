@@ -2,8 +2,8 @@ Package: BDEsize
 Type: Package
 Title: Efficient Determination of Sample Size in Balanced Design of
         Experiments
-Version: 1.1
-Date: 2019-03-27
+Version: 1.2
+Date: 2019-11-01
 Author: Jong Hee Chung, Yong Bin Lim
 Maintainer: Jong Hee Chung <jochung947@gmail.com>
 Description: Provides the sample size in balanced design of experiments and three graphs ; detectable standardized effect size vs power, sample size vs detectable standardized effect size, and sample size vs power. 
@@ -20,5 +20,5 @@ RoxygenNote: 6.1.1
 NeedsCompilation: no
 Repository: CRAN
 Imports: fpow, shiny, shinyalert, ggplot2
-Packaged: 2019-03-27 17:29:04 UTC; jonghee
-Date/Publication: 2019-03-31 12:00:06 UTC
+Packaged: 2019-10-31 19:42:48 UTC; jonghee
+Date/Publication: 2019-11-01 05:10:03 UTC

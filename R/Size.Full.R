@@ -39,9 +39,14 @@ Size.Full <- function(factor, factor.lev,order=1, delta_type=1, delta, alpha=0.0
   two_n<-0
   nn<-0
   Delta <- NULL
+  if (factor==1 & order==2)
+  {
+    return( "The number of factor is just one! Two-way interactions can't be estimated.")
+    }
   list_tmp<-sizelist(factor,order)
   full_list<-list_tmp$full_list
   list1<-list_tmp$list1
+
 
   if( order==2)
   {
@@ -53,7 +58,7 @@ Size.Full <- function(factor, factor.lev,order=1, delta_type=1, delta, alpha=0.0
     v_flag<-rep(0,factor+factor*(factor-1)/2)
   }
 
-  for (n in 2:100){
+  for (n in 2:1000){
     v1=n-1
     if (order==1){
       v <- factor.lev-1
@@ -99,5 +104,10 @@ Size.Full <- function(factor, factor.lev,order=1, delta_type=1, delta, alpha=0.0
       break
     }
   }
+
+  if(nn==0 & n==1000)
+    {
+    return("Sample size exceeds 1,000.")
+}
   return(list(model=list1,n=nn, Delta=Delta))
 }

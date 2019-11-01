@@ -20,12 +20,12 @@
 #' @return one of three graphs ;  Delta vs Power plot , Sample size vs Delta plot, and Sample ize vs Power plot
 #' @examples
 #' #Delta vs Power plot
-#' plots.Split(whole.factor=2, whole.factor.lev=c(2,2),
-#' split.factor=2, split.factor.lev=c(2,2), order=1,
+#' plots.Split(whole.factor=1, whole.factor.lev=c(2),
+#' split.factor=1, split.factor.lev=c(2), order=1,
 #' delta_type=1, delta=c(1,0,1,1), alpha=0.05, beta=0.2, type=1)
 #' #Sample ize vs Power plot including two-way interaction effects
-#' plots.Split(whole.factor=2, whole.factor.lev=c(2,2),
-#' split.factor=2, split.factor.lev=c(2,2), order=2,
+#' plots.Split(whole.factor=1, whole.factor.lev=c(2),
+#' split.factor=1, split.factor.lev=c(2), order=2,
 #' delta_type=1, delta=c(1,1,1,1),deltao=1, alpha=0.05, beta=0.2, type=3)
 #'
 #' @export
@@ -37,11 +37,11 @@ plots.Split<-
     (n.choose <- FF$n);
     (Delta.choose <- data.frame(t(FF$Delta)))
     nn<- ncol(Delta.choose)
-    power <- round(seq(0,1,length.out=101),3)
+    power <- round(seq(0,1,length.out=1001),3)
 
-    delta.pwr <-matrix(0,100,nn)
-    Delta <-matrix(0,100,nn)
-    pwr <-matrix(0,100,nn)
+    delta.pwr <-matrix(0,1000,nn)
+    Delta <-matrix(0,1000,nn)
+    pwr <-matrix(0,1000,nn)
     wfl<-whole.factor.lev
     sfl<-split.factor.lev
 
@@ -58,7 +58,7 @@ plots.Split<-
 
     v.whole <- NULL ; v.split <- NULL ; v.split.temp <- NULL
     c.whole <- NULL ; c.split <- NULL
-    for (n in 2:101) {
+    for (n in 2:1001) {
       v1=n-1
       v.rep <- n-1
       if (order==1){
@@ -88,15 +88,15 @@ plots.Split<-
 
       if (type==1 & n==n.choose) {
         for (i in 1: length(v.whole)){
-          for (ind in 1: 100){
-            if(alpha+1-power[ind]<0.9999)
+          for (ind in 1: 1000){
+            if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
               (delta.pwr[ind,  i] <- fsize(alpha, 1-power[ind],v.whole[i], v.whole.denom, c.whole[i], delta_type ,wv_flag[i])*sqrt(prod( sfl)+1))
             else ( delta.pwr[ind, i]<-NA)
           }
         }
         for (i in 1: length(v.split)){
-          for (ind in 1: 100){
-            if(alpha+1-power[ind]<0.9999)
+          for (ind in 1: 1000){
+            if (alpha + 1 - power[ind] < 0.9999 & 1 - power[ind] > 0.0001 & 1 - power[ind] <0.9999 )
               (delta.pwr[ind, (length(v.whole)+i)] <- fsize(alpha, 1-power[ind], v.split[i], v.split.denom, c.split[i], delta_type ,sv_flag[i]))
             else ( delta.pwr[ind, (length(v.whole)+i)] <-NA)
           }
@@ -131,7 +131,7 @@ plots.Split<-
 
     for(i in 1: (length(v.whole)+length(v.split)))
     {
-      tmp1<-rep(full_list[[i]],100)
+      tmp1<-rep(full_list[[i]],1000)
       if ( i==1)
         factor_type<-tmp1
       else if (i>1)
@@ -145,13 +145,13 @@ plots.Split<-
         if(i==1)
         {
           Delta1<-delta.pwr[,i]
-          power1 <-power[1:100]
+          power1 <-power[1:1000]
         }
 
         else
         {
           Delta1<-t(cbind(t(Delta1),t(delta.pwr[,i])))
-          power1 <-t(cbind(t(power1),t(power[1:100])))
+          power1 <-t(cbind(t(power1),t(power[1:1000])))
         }
       }
 
@@ -170,7 +170,7 @@ plots.Split<-
     }
     else if(type==2)
     {
-      n<-c(2:101)
+      n<-c(2:1001)
       for( i in 1: (length(v.whole)+length(v.split)))
       {
         if(i==1)
@@ -199,7 +199,7 @@ plots.Split<-
     }
     else if(type==3)
     {
-      n<-c(2:101)
+      n<-c(2:1001)
       for( i in 1: (length(v.whole)+length(v.split)))
       {
         if(i==1)
