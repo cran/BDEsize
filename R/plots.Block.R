@@ -93,9 +93,8 @@ plots.Block <- function(factor.lev, interaction=FALSE, delta_type=1, delta=c(1, 
         
         data1$factor_type <- factor(data1$factor_type, levels = unique(data1$factor_type)) #terms[uniqueindex])
         gr <- ggplot2::ggplot(data1, ggplot2::aes(x=Delta1, y=power1, color=factor_type)) +
-            ggplot2::geom_line(size=1.5) + ggplot2::labs(title = "Power vs Delta") + ggplot2::ylab("Power") +
-            ggplot2::theme(axis.title.y=ggplot2::element_text(angle=90, size=12)) +
-            ggplot2::xlab("Delta") + ggplot2::theme(axis.title.y=ggplot2::element_text(size=12)) +
+            ggplot2::geom_line(size=1.5) + ggplot2::labs(title = "Power vs Delta") +
+            ggplot2::ylab("Power") +  ggplot2::xlab("Delta") + 
             ggplot2::geom_hline(yintercept = c(0.8, 0.9), linetype = "dashed") +
             ggplot2::geom_vline(xintercept = c(1.0, 1.5), linetype = "dashed")
     } else if (type == 2) {
@@ -128,9 +127,8 @@ plots.Block <- function(factor.lev, interaction=FALSE, delta_type=1, delta=c(1, 
         
         data2$factor_type <- factor(data2$factor_type, levels = unique(data2$factor_type)) #terms[uniqueindex])
         gr <- ggplot2::ggplot(data2[1:ndata + 1 <= 2*n.choose, ], ggplot2::aes(x=n, y=Delta1, color=factor_type)) +
-            ggplot2::geom_line(size=1.5) + ggplot2::labs(title = "Delta vs Number of Blocks") + ggplot2::ylab("Delta") +
-            ggplot2::theme(axis.title.y=ggplot2::element_text(angle=90, size=12)) +
-            ggplot2::xlab("Number of Blocks") + ggplot2::theme(axis.title.y=ggplot2::element_text(size=12)) +
+            ggplot2::geom_line(size=1.5) + ggplot2::labs(title = "Delta vs Number of Blocks") + 
+            ggplot2::ylab("Delta") + ggplot2::xlab("Number of Blocks") + 
             ggplot2::geom_hline(yintercept = c(1.0, 1.5), linetype = "dashed") +
             ggplot2::geom_vline(xintercept = n.choose, linetype = "dashed")
     } else if (type == 3) {
@@ -165,12 +163,17 @@ plots.Block <- function(factor.lev, interaction=FALSE, delta_type=1, delta=c(1, 
         
         data3$factor_type <- factor(data3$factor_type, unique(data3$factor_type)) #terms[uniqueindex])
         gr <- ggplot2::ggplot(data3[1:ndata + 1 <= 2*n.choose, ], ggplot2::aes(x=n, y=power1, color=factor_type)) +
-            ggplot2::geom_line(size=1.5) + ggplot2::labs(title = "Power vs Number of Blocks") + ggplot2::ylab("Power") +
-            ggplot2::theme(axis.title.y=ggplot2::element_text(angle=90, size=12)) +
-            ggplot2::xlab("Number of Blocks") + ggplot2::theme(axis.title.y=ggplot2::element_text(size=12)) +
+            ggplot2::geom_line(size=1.5) + ggplot2::labs(title = "Power vs Number of Blocks") + 
+            ggplot2::ylab("Power") + ggplot2::xlab("Number of Blocks") + 
             ggplot2::geom_hline(yintercept = c(0.8, 0.9), linetype = "dashed") +
             ggplot2::geom_vline(xintercept = n.choose, linetype = "dashed")        
     }        
     
-    gr
+    # The palette with grey:
+    cbp1 <- c("#999999", "#E69F00", "#56B4E9", "#009E73",
+              "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+    # The palette with black:
+    cbp2 <- c("#000000", "#E69F00", "#56B4E9", "#009E73",
+              "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+    gr + ggplot2::theme(text = ggplot2::element_text(size = 20)) + ggplot2::scale_colour_manual(values=cbp2)   
 }

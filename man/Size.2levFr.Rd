@@ -11,7 +11,7 @@ Size.2levFr(nfactor, nfraction, interaction = FALSE, delta_type = 1,
 }
 \arguments{
 \item{nfactor}{the number of factor.}
-\item{nfraction}{the number of fraction. For example, when a model is \eqn{2^{(k-p)}}, k is the number of factor and p is the number of fraction. It is called a \eqn{1/2^p} fraction of the \eqn{2^k} design.} 
+\item{nfraction}{the number of fraction. For example, when a model is \eqn{2^(k-p)}, k is the number of factor and p is the number of fraction. It is called a \eqn{1/2^p} fraction of the \eqn{2^k} design.} 
 \item{interaction}{specifies whether two-way interaction effects are included in a model with the main effects. When \code{interaction = TRUE}, 
 two-way interaction effects are include in a model.}
 \item{delta_type}{specifies the type of standardized effect size: 1 for standard deviation type and 2 for range type.}

@@ -1,7 +1,7 @@
 Package: BDEsize
 Type: Package
-Version: 1.5
-Date: 2021-04-19
+Version: 1.6
+Date: 2021-09-29
 Title: Efficient Determination of Sample Size in Balanced Design of
         Experiments
 Authors@R: c(person("Jong Hee", "Chung", role = c("aut", "cre"), email = "jochung947@gmail.com"),
@@ -16,6 +16,6 @@ License: GPL (>= 2)
 Encoding: UTF-8
 NeedsCompilation: no
 Imports: fpow, ggplot2
-Packaged: 2021-04-23 11:28:25 UTC; jonghee
+Packaged: 2021-09-29 20:59:27 UTC; jonghee
 Repository: CRAN
-Date/Publication: 2021-04-23 15:00:21 UTC
+Date/Publication: 2021-09-29 21:40:02 UTC
